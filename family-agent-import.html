@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0b1220" />
+  <title>Family Operating Agent</title>
+  <meta name="description" content="Find hidden family opportunities, coordinate tasks, and close open loops." />
+  <style>
+:root {
+  --bg:#f4f7fb; --surface:#ffffff; --ink:#102033; --muted:#697789; --line:#dfe6ef;
+  --nav:#0b1220; --nav2:#14213a; --accent:#3aa981; --accent-dark:#167557; --gold:#e8b94e;
+  --blue:#4978e8; --red:#bf4a4a; --shadow:0 14px 35px rgba(16,32,51,.08); --radius:18px;
+}
+*{box-sizing:border-box} body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink)}
+button,input,select,textarea{font:inherit} button{cursor:pointer}.app-shell{min-height:100vh;display:grid;grid-template-columns:248px 1fr}.sidebar{background:linear-gradient(180deg,var(--nav),#101d31);color:white;padding:24px 18px;display:flex;flex-direction:column;gap:24px;position:sticky;top:0;height:100vh}.brand-wrap{display:flex;gap:12px;align-items:center;padding:4px 6px}.brand-mark{width:42px;height:42px;border-radius:13px;background:linear-gradient(135deg,#50c69b,#2e8b69);display:grid;place-items:center;font-weight:800;font-size:22px}.brand{font-weight:800;letter-spacing:-.02em}.brand-sub{font-size:12px;color:#9daabd;margin-top:2px}.nav-list{display:grid;gap:8px}.nav-btn{border:0;background:transparent;color:#b5c0d0;border-radius:12px;text-align:left;padding:12px 13px;display:flex;gap:11px;align-items:center;font-weight:650}.nav-btn:hover,.nav-btn.active{background:#1b2a43;color:#fff}.side-note{margin-top:auto;display:flex;gap:10px;padding:14px;border:1px solid #263751;background:#122037;border-radius:14px;font-size:12px;color:#aeb9c9;line-height:1.45}.side-note strong{color:white}.status-dot{width:9px;height:9px;border-radius:50%;background:#58d6a2;margin-top:5px;box-shadow:0 0 0 4px rgba(88,214,162,.12)}.main{padding:24px 30px 48px;min-width:0}.topbar{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:24px}.topbar h1{margin:4px 0 0;font-size:30px;letter-spacing:-.035em}.eyebrow,.kicker{text-transform:uppercase;letter-spacing:.12em;font-weight:800;font-size:11px;color:#7c899a}.top-actions{display:flex;gap:10px;align-items:center}.search-wrap{height:44px;display:flex;align-items:center;gap:8px;padding:0 13px;border:1px solid var(--line);border-radius:12px;background:white;min-width:310px}.search-wrap input{border:0;outline:0;width:100%;background:transparent;color:var(--ink)}.primary,.ghost,.text-btn,.chip,.icon-btn{border-radius:11px;border:1px solid transparent;font-weight:750}.primary{background:var(--accent-dark);color:white;padding:11px 15px}.primary:hover{filter:brightness(.96)}.ghost{background:white;color:var(--ink);border-color:var(--line);padding:10px 14px}.ghost.danger{background:transparent;color:#9eabbc;border-color:#2a3a52}.ghost.danger:hover{color:#fff;border-color:#65758a}.text-btn{background:transparent;color:var(--accent-dark);padding:8px}.view{display:none}.active-view{display:block}.hero-card{background:radial-gradient(circle at top right,#265e54 0,#16382f 28%,#10291f 65%,#0c2118 100%);color:white;border-radius:22px;padding:28px 30px;display:flex;justify-content:space-between;gap:22px;align-items:center;box-shadow:var(--shadow);position:relative;overflow:hidden}.hero-card:after{content:"";position:absolute;width:240px;height:240px;border-radius:50%;right:-80px;top:-110px;border:1px solid rgba(255,255,255,.12)}.hero-card h2{font-size:28px;letter-spacing:-.035em;margin:7px 0}.hero-card p{margin:0;color:#bfcdc5;max-width:690px;line-height:1.55}.hero-card .kicker{color:#86d6b9}.hero-actions{display:flex;gap:9px;z-index:1;flex-wrap:wrap}.primary.light{background:white;color:#123426}.ghost.light{background:rgba(255,255,255,.05);color:white;border-color:rgba(255,255,255,.22)}.metric-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:18px 0}.metric-card,.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 6px 18px rgba(16,32,51,.035)}.metric-card{padding:19px}.metric-label{font-size:13px;color:var(--muted);font-weight:650}.metric-value{font-size:32px;letter-spacing:-.04em;font-weight:850;margin:6px 0}.metric-foot{font-size:12px;color:#8a96a5}.two-col{display:grid;grid-template-columns:1.15fr .85fr;gap:16px}.panel{padding:20px}.panel-head{display:flex;justify-content:space-between;gap:15px;align-items:center;margin-bottom:15px}.panel h3{margin:4px 0 0;font-size:19px;letter-spacing:-.02em}.stack{display:grid;gap:10px}.op-mini,.task-mini{border:1px solid var(--line);border-radius:14px;padding:13px 14px;display:flex;justify-content:space-between;gap:12px;align-items:center;background:#fbfcfe}.op-mini:hover,.task-mini:hover{border-color:#bac8d9}.op-main{min-width:0}.op-title{font-weight:800}.op-meta{font-size:12px;color:var(--muted);margin-top:5px;display:flex;gap:7px;flex-wrap:wrap}.value-pill{font-weight:850;color:#165d47;background:#e9f7f1;border:1px solid #cbeadd;border-radius:10px;padding:6px 9px;white-space:nowrap}.confidence{display:inline-flex;padding:3px 7px;border-radius:999px;font-size:10px;font-weight:850;text-transform:uppercase;letter-spacing:.06em}.confidence.lead{color:#7a5c12;background:#fff4d6}.confidence.likely{color:#215c9a;background:#e8f2ff}.confidence.verified{color:#116948;background:#e3f7ef}.timeline-panel{margin-top:16px}.pipeline{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}.pipe-stage{padding:12px;border-radius:13px;background:#f7f9fc;border:1px solid var(--line)}.pipe-num{font-size:23px;font-weight:850}.pipe-label{font-size:11px;color:var(--muted);margin-top:2px}.view-heading{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:18px}.view-heading h2{font-size:28px;margin:4px 0 3px;letter-spacing:-.03em}.view-heading p{margin:0;color:var(--muted);max-width:710px}.filter-row{display:flex;gap:7px;flex-wrap:wrap}.chip{background:white;border-color:var(--line);padding:8px 11px;color:#627083}.chip.active{background:#15243a;color:white;border-color:#15243a}.opportunity-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.op-card{background:white;border:1px solid var(--line);border-radius:17px;padding:18px;box-shadow:0 5px 16px rgba(16,32,51,.035);display:grid;gap:14px}.op-card:hover{box-shadow:var(--shadow)}.op-card-top{display:flex;justify-content:space-between;gap:12px}.op-card h3{margin:6px 0 0;font-size:18px}.op-category{font-size:12px;color:var(--muted)}.op-value{font-size:22px;font-weight:850;color:#175d47;white-space:nowrap}.stage-row{display:flex;gap:7px;align-items:center;justify-content:space-between}.stage-select{border:1px solid var(--line);background:#fbfcfe;border-radius:9px;padding:7px;color:#425268}.next-action{padding:12px;background:#f6f8fb;border-radius:11px;font-size:13px;color:#445264}.next-action strong{color:var(--ink)}.card-actions{display:flex;justify-content:flex-end;gap:7px}.small-btn{border:0;background:#eef3f8;color:#334459;border-radius:9px;padding:7px 10px;font-size:12px;font-weight:750}.small-btn:hover{background:#e3eaf2}.task-list{display:grid;gap:9px}.task-row{display:grid;grid-template-columns:auto 1fr auto auto;gap:12px;align-items:center;padding:13px 4px;border-bottom:1px solid #edf1f5}.task-row:last-child{border-bottom:0}.task-check{width:20px;height:20px;accent-color:var(--accent-dark)}.task-title{font-weight:750}.task-title.done{text-decoration:line-through;color:#8d98a6}.task-sub{font-size:12px;color:var(--muted);margin-top:4px}.due{font-size:12px;color:#5f6c7d;white-space:nowrap}.delete-btn{border:0;background:transparent;color:#a36b6b;font-size:18px}.family-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:16px}.person-card{background:white;border:1px solid var(--line);border-radius:17px;padding:17px}.avatar{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:#eaf1f8;font-weight:850;color:#36516d}.person-top{display:flex;gap:11px;align-items:center}.person-name{font-weight:850}.person-rel{font-size:12px;color:var(--muted);margin-top:2px}.person-role{display:inline-flex;margin-top:13px;padding:5px 8px;border-radius:8px;background:#edf5f2;color:#2a6b56;font-weight:750;font-size:11px}.person-note{margin-top:10px;color:#566477;font-size:13px;line-height:1.45}.memory-panel textarea{width:100%;resize:vertical;border:1px solid var(--line);border-radius:12px;padding:13px;outline:none;line-height:1.5}.memory-panel textarea:focus{border-color:#7db59e;box-shadow:0 0 0 3px rgba(58,169,129,.12)}.save-row{display:flex;justify-content:flex-end;align-items:center;gap:12px;margin-top:10px;color:#8090a1;font-size:12px}.dialog{width:min(560px,calc(100vw - 28px));border:0;border-radius:18px;padding:0;box-shadow:0 24px 80px rgba(0,0,0,.24)}.dialog::backdrop{background:rgba(11,18,32,.55);backdrop-filter:blur(2px)}.dialog-form,.detail-dialog>div{padding:22px}.dialog-head{display:flex;justify-content:space-between;align-items:start;margin-bottom:16px}.dialog-head h3{margin:3px 0;font-size:22px}.icon-btn{background:transparent;font-size:24px;color:#6d7b8d;padding:0 7px}.dialog-form label{display:grid;gap:6px;font-size:12px;font-weight:800;color:#4d5c6d;margin:12px 0}.dialog-form input,.dialog-form select{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px 11px;outline:0;background:white}.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.dialog-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}.detail-section{padding:12px 0;border-top:1px solid var(--line)}.detail-section:first-of-type{border-top:0}.detail-title{font-size:12px;color:var(--muted);font-weight:750}.detail-value{margin-top:5px;font-weight:700}.toast{position:fixed;right:24px;bottom:24px;background:#132338;color:white;padding:11px 15px;border-radius:11px;box-shadow:var(--shadow);opacity:0;transform:translateY(8px);pointer-events:none;transition:.22s}.toast.show{opacity:1;transform:translateY(0)}.empty{padding:22px;border:1px dashed #cfd8e3;border-radius:14px;text-align:center;color:#7f8b99}.hidden{display:none!important}
+@media (max-width:1050px){.metric-grid{grid-template-columns:repeat(2,1fr)}.two-col{grid-template-columns:1fr}.opportunity-grid{grid-template-columns:1fr}.family-grid{grid-template-columns:repeat(2,1fr)}.pipeline{grid-template-columns:repeat(3,1fr)}.search-wrap{min-width:220px}}
+@media (max-width:760px){.app-shell{grid-template-columns:1fr}.sidebar{position:static;height:auto;padding:14px;gap:12px}.brand-wrap{padding:0 2px}.brand-sub,.side-note,.ghost.danger{display:none}.nav-list{grid-template-columns:repeat(4,1fr);gap:4px}.nav-btn{justify-content:center;padding:10px 6px;font-size:12px}.nav-btn span{display:none}.main{padding:18px 14px 40px}.topbar{align-items:flex-start;flex-direction:column}.top-actions{width:100%}.search-wrap{min-width:0;flex:1}.hero-card{align-items:flex-start;flex-direction:column;padding:22px}.hero-card h2{font-size:24px}.metric-grid{grid-template-columns:1fr 1fr}.metric-value{font-size:27px}.view-heading{align-items:flex-start;flex-direction:column}.family-grid{grid-template-columns:1fr}.pipeline{grid-template-columns:repeat(2,1fr)}.task-row{grid-template-columns:auto 1fr auto}.due{display:none}.form-row{grid-template-columns:1fr}.topbar h1{font-size:26px}}
+@media (max-width:460px){.metric-grid{grid-template-columns:1fr}.top-actions{align-items:stretch;flex-direction:column}.primary{white-space:nowrap}.nav-btn{font-size:11px}.op-card-top{flex-direction:column}.op-value{font-size:20px}}
+
+</style>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Primary navigation">
+      <div class="brand-wrap">
+        <div class="brand-mark" aria-hidden="true">F</div>
+        <div>
+          <div class="brand">Family Agent</div>
+          <div class="brand-sub">Operating system</div>
+        </div>
+      </div>
+      <nav class="nav-list">
+        <button class="nav-btn active" data-view="dashboard"><span>⌂</span> Home</button>
+        <button class="nav-btn" data-view="opportunities"><span>◇</span> Opportunities</button>
+        <button class="nav-btn" data-view="actions"><span>✓</span> Action Center</button>
+        <button class="nav-btn" data-view="family"><span>◉</span> Family</button>
+      </nav>
+      <div class="side-note">
+        <div class="status-dot"></div>
+        <div><strong>Persistent workspace</strong><br><span>Your progress is saved on this device.</span></div>
+      </div>
+      <button id="resetDemo" class="ghost danger">Reset demo data</button>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <div class="eyebrow">Family Operating Agent</div>
+          <h1 id="pageTitle">Family command center</h1>
+        </div>
+        <div class="top-actions">
+          <div class="search-wrap">
+            <span aria-hidden="true">⌕</span>
+            <input id="globalSearch" type="search" placeholder="Search opportunities, tasks, people" aria-label="Search" />
+          </div>
+          <button id="addOpportunity" class="primary">+ Add opportunity</button>
+        </div>
+      </header>
+
+      <section id="dashboard" class="view active-view" aria-labelledby="pageTitle">
+        <section class="hero-card">
+          <div>
+            <div class="kicker">Best next move</div>
+            <h2 id="nextMoveTitle">Review your highest-value opportunity</h2>
+            <p id="nextMoveReason">Family Agent keeps the most valuable unresolved opportunity visible until it is closed.</p>
+          </div>
+          <div class="hero-actions">
+            <button id="doNextMove" class="primary light">Open next move</button>
+            <button id="snoozeNext" class="ghost light">Snooze 24h</button>
+          </div>
+        </section>
+
+        <div class="metric-grid">
+          <article class="metric-card">
+            <div class="metric-label">Potential value found</div>
+            <div id="potentialValue" class="metric-value">$0</div>
+            <div class="metric-foot">Across active opportunities</div>
+          </article>
+          <article class="metric-card">
+            <div class="metric-label">Open opportunities</div>
+            <div id="openCount" class="metric-value">0</div>
+            <div class="metric-foot">Not yet closed</div>
+          </article>
+          <article class="metric-card">
+            <div class="metric-label">Action items</div>
+            <div id="taskCount" class="metric-value">0</div>
+            <div class="metric-foot">Still needs follow-through</div>
+          </article>
+          <article class="metric-card">
+            <div class="metric-label">Value received</div>
+            <div id="receivedValue" class="metric-value">$0</div>
+            <div class="metric-foot">Verified wins</div>
+          </article>
+        </div>
+
+        <div class="two-col">
+          <section class="panel">
+            <div class="panel-head">
+              <div><div class="eyebrow">Hidden opportunity</div><h3>Highest-value discoveries</h3></div>
+              <button class="text-btn" data-go="opportunities">View all</button>
+            </div>
+            <div id="topOpportunities" class="stack"></div>
+          </section>
+          <section class="panel">
+            <div class="panel-head">
+              <div><div class="eyebrow">Open loops</div><h3>Needs attention</h3></div>
+              <button class="text-btn" data-go="actions">Action center</button>
+            </div>
+            <div id="dashboardTasks" class="stack"></div>
+          </section>
+        </div>
+
+        <section class="panel timeline-panel">
+          <div class="panel-head"><div><div class="eyebrow">Progress</div><h3>Opportunity pipeline</h3></div></div>
+          <div id="pipeline" class="pipeline"></div>
+        </section>
+      </section>
+
+      <section id="opportunities" class="view">
+        <div class="view-heading">
+          <div><div class="eyebrow">Discovery engine</div><h2>Opportunities</h2><p>Track potential money, benefits, savings, reimbursements, warranties, credits, and recovered assets.</p></div>
+          <div class="filter-row" id="opportunityFilters">
+            <button class="chip active" data-filter="all">All</button>
+            <button class="chip" data-filter="lead">Lead</button>
+            <button class="chip" data-filter="likely">Likely eligible</button>
+            <button class="chip" data-filter="verified">Verified</button>
+          </div>
+        </div>
+        <div id="opportunityList" class="opportunity-grid"></div>
+      </section>
+
+      <section id="actions" class="view">
+        <div class="view-heading">
+          <div><div class="eyebrow">Execution</div><h2>Action Center</h2><p>Every open loop has a next action, owner, and status.</p></div>
+          <button id="addTask" class="primary">+ Add task</button>
+        </div>
+        <div class="panel">
+          <div id="taskList" class="task-list"></div>
+        </div>
+      </section>
+
+      <section id="family" class="view">
+        <div class="view-heading">
+          <div><div class="eyebrow">Household memory</div><h2>Family</h2><p>Keep household roles, recurring routines, responsibilities, and preferences in one persistent place.</p></div>
+          <button id="addPerson" class="primary">+ Add person</button>
+        </div>
+        <div id="familyGrid" class="family-grid"></div>
+        <section class="panel memory-panel">
+          <div class="panel-head"><div><div class="eyebrow">Shared memory</div><h3>Household notes</h3></div></div>
+          <textarea id="householdNotes" rows="7" placeholder="Example: Mom prefers appointments after 10 AM. Dad eats dinner at 6 PM. German market every other Wednesday."></textarea>
+          <div class="save-row"><span id="saveStatus">Saved</span><button id="saveNotes" class="primary">Save notes</button></div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="opportunityDialog" class="dialog">
+    <form method="dialog" id="opportunityForm" class="dialog-form">
+      <div class="dialog-head"><div><div class="eyebrow">New discovery</div><h3>Add opportunity</h3></div><button class="icon-btn" value="cancel" aria-label="Close">×</button></div>
+      <label>Opportunity name<input name="title" required placeholder="Property tax relief" /></label>
+      <label>Category<select name="category"><option>Benefits</option><option>Insurance</option><option>Tax credit</option><option>Warranty</option><option>Unclaimed property</option><option>Employer benefit</option><option>Home rebate</option><option>Travel & points</option></select></label>
+      <div class="form-row"><label>Estimated value<input name="value" type="number" min="0" step="1" placeholder="2500" /></label><label>Confidence<select name="confidence"><option value="lead">Lead</option><option value="likely">Likely eligible</option><option value="verified">Verified</option></select></label></div>
+      <label>Next action<input name="nextAction" placeholder="Gather eligibility documents" /></label>
+      <div class="dialog-actions"><button class="ghost" value="cancel">Cancel</button><button class="primary" value="default">Save opportunity</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="taskDialog" class="dialog">
+    <form method="dialog" id="taskForm" class="dialog-form">
+      <div class="dialog-head"><div><div class="eyebrow">Open loop</div><h3>Add task</h3></div><button class="icon-btn" value="cancel" aria-label="Close">×</button></div>
+      <label>Task<input name="title" required placeholder="Call benefits office" /></label>
+      <div class="form-row"><label>Owner<input name="owner" placeholder="Me" /></label><label>Due date<input name="due" type="date" /></label></div>
+      <label>Linked opportunity<select id="taskOpportunitySelect" name="opportunityId"><option value="">None</option></select></label>
+      <div class="dialog-actions"><button class="ghost" value="cancel">Cancel</button><button class="primary" value="default">Save task</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="personDialog" class="dialog">
+    <form method="dialog" id="personForm" class="dialog-form">
+      <div class="dialog-head"><div><div class="eyebrow">Household member</div><h3>Add person</h3></div><button class="icon-btn" value="cancel" aria-label="Close">×</button></div>
+      <label>Name<input name="name" required placeholder="First name" /></label>
+      <div class="form-row"><label>Relationship<input name="relationship" placeholder="Parent" /></label><label>Role<input name="role" placeholder="Needs coordination" /></label></div>
+      <label>Key note<input name="note" placeholder="Prefers morning appointments" /></label>
+      <div class="dialog-actions"><button class="ghost" value="cancel">Cancel</button><button class="primary" value="default">Save person</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="detailDialog" class="dialog detail-dialog">
+    <div id="detailContent"></div>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script>
+const KEY = 'familyAgent.v2';
+const STAGES = ['Discovered','Reviewing','Applying','Waiting','Received','Closed'];
+const demo = {
+  opportunities:[
+    {id:'op1',title:'Home energy rebate',category:'Home rebate',value:3200,confidence:'likely',stage:'Reviewing',nextAction:'Confirm eligible equipment and contractor documentation',created:Date.now()-500000},
+    {id:'op2',title:'Unclaimed property search',category:'Unclaimed property',value:1850,confidence:'lead',stage:'Discovered',nextAction:'Match prior addresses and claimant names',created:Date.now()-400000},
+    {id:'op3',title:'Employer caregiver benefit',category:'Employer benefit',value:5400,confidence:'likely',stage:'Applying',nextAction:'Upload caregiver certification and submit application',created:Date.now()-300000},
+    {id:'op4',title:'Appliance warranty reimbursement',category:'Warranty',value:950,confidence:'verified',stage:'Waiting',nextAction:'Track reimbursement confirmation',created:Date.now()-200000},
+    {id:'op5',title:'Travel credit recovery',category:'Travel & points',value:725,confidence:'verified',stage:'Received',nextAction:'Value received and verified',created:Date.now()-100000},
+  ],
+  tasks:[
+    {id:'t1',title:'Upload caregiver certification',owner:'Family Manager',due:'',opportunityId:'op3',done:false},
+    {id:'t2',title:'Check prior addresses for property search',owner:'Family Manager',due:'',opportunityId:'op2',done:false},
+    {id:'t3',title:'Call warranty administrator',owner:'Family Manager',due:'',opportunityId:'op4',done:false},
+  ],
+  people:[
+    {id:'p1',name:'Family Manager',relationship:'Coordinator',role:'Runs point',note:'Owns follow-through and closes open loops.'},
+    {id:'p2',name:'Parent 1',relationship:'Parent',role:'Care support',note:'Add routines, appointments, preferences, and benefits here.'},
+    {id:'p3',name:'Parent 2',relationship:'Parent',role:'Care support',note:'Family memory stays attached to the household.'},
+  ],
+  notes:'', snoozedUntil:0
+};
+let state = loadState();
+let opFilter = 'all';
+let searchTerm = '';
+
+function loadState(){
+  try{const v=JSON.parse(localStorage.getItem(KEY));return v && v.opportunities ? v : structuredClone(demo);}catch{return structuredClone(demo)}
+}
+function save(){localStorage.setItem(KEY,JSON.stringify(state));renderAll();}
+function money(n){return new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(Number(n)||0)}
+function confLabel(c){return c==='likely'?'Likely eligible':c.charAt(0).toUpperCase()+c.slice(1)}
+function esc(s=''){return String(s).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
+function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');clearTimeout(window.__toast);window.__toast=setTimeout(()=>el.classList.remove('show'),1800)}
+function openOps(){showView('opportunities')}
+
+function showView(id){
+  document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active-view',v.id===id));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b.dataset.view===id));
+  const titles={dashboard:'Family command center',opportunities:'Opportunity discovery',actions:'Action center',family:'Family workspace'};
+  document.getElementById('pageTitle').textContent=titles[id]||'Family Agent';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function activeOps(){return state.opportunities.filter(o=>o.stage!=='Closed')}
+function score(o){const cf={lead:.45,likely:.72,verified:1}[o.confidence]||.4;const stageBoost={Discovered:1,Reviewing:.95,Applying:.9,Waiting:.75,Received:.1,Closed:0}[o.stage]??1;return o.value*cf*stageBoost}
+function nextMove(){return activeOps().filter(o=>o.stage!=='Received').sort((a,b)=>score(b)-score(a))[0]}
+
+function renderDashboard(){
+  const open=activeOps();
+  const pot=open.filter(o=>o.stage!=='Received').reduce((s,o)=>s+Number(o.value||0),0);
+  const received=state.opportunities.filter(o=>o.stage==='Received'||o.stage==='Closed').reduce((s,o)=>s+Number(o.value||0),0);
+  const tasks=state.tasks.filter(t=>!t.done);
+  document.getElementById('potentialValue').textContent=money(pot);
+  document.getElementById('openCount').textContent=open.filter(o=>o.stage!=='Received').length;
+  document.getElementById('taskCount').textContent=tasks.length;
+  document.getElementById('receivedValue').textContent=money(received);
+  const nm=nextMove();
+  const snoozed=state.snoozedUntil>Date.now();
+  document.getElementById('nextMoveTitle').textContent=snoozed?'Next move snoozed':(nm?nm.title:'No urgent open loops');
+  document.getElementById('nextMoveReason').textContent=snoozed?'It will return after the snooze expires.':(nm?`${nm.nextAction || 'Review and choose the next action.'} • Estimated value ${money(nm.value)}`:'You are caught up. Add a new opportunity when one appears.');
+  document.getElementById('doNextMove').disabled=!nm||snoozed;
+  document.getElementById('topOpportunities').innerHTML = [...open].filter(o=>o.stage!=='Received').sort((a,b)=>score(b)-score(a)).slice(0,4).map(o=>`
+    <button class="op-mini" data-open-op="${o.id}"><div class="op-main"><div class="op-title">${esc(o.title)}</div><div class="op-meta"><span>${esc(o.category)}</span><span class="confidence ${o.confidence}">${confLabel(o.confidence)}</span><span>${o.stage}</span></div></div><div class="value-pill">${money(o.value)}</div></button>
+  `).join('') || '<div class="empty">No active opportunities.</div>';
+  document.getElementById('dashboardTasks').innerHTML = tasks.slice(0,5).map(t=>`<label class="task-mini"><span><input class="quick-task" type="checkbox" data-task="${t.id}"> <strong>${esc(t.title)}</strong></span><span class="op-meta">${esc(t.owner||'Unassigned')}</span></label>`).join('') || '<div class="empty">No open tasks.</div>';
+  document.getElementById('pipeline').innerHTML=STAGES.map(s=>`<div class="pipe-stage"><div class="pipe-num">${state.opportunities.filter(o=>o.stage===s).length}</div><div class="pipe-label">${s}</div></div>`).join('');
+}
+
+function filteredOps(){
+  return state.opportunities.filter(o=>{
+    const f=opFilter==='all'||o.confidence===opFilter;
+    const q=!searchTerm||`${o.title} ${o.category} ${o.nextAction} ${o.stage}`.toLowerCase().includes(searchTerm);
+    return f&&q;
+  }).sort((a,b)=>score(b)-score(a));
+}
+function renderOpportunities(){
+  const list=filteredOps();
+  document.getElementById('opportunityList').innerHTML=list.map(o=>`
+    <article class="op-card" data-id="${o.id}">
+      <div class="op-card-top"><div><div class="op-category">${esc(o.category)} · <span class="confidence ${o.confidence}">${confLabel(o.confidence)}</span></div><h3>${esc(o.title)}</h3></div><div class="op-value">${money(o.value)}</div></div>
+      <div class="next-action"><strong>Next action:</strong> ${esc(o.nextAction||'Choose the next action')}</div>
+      <div class="stage-row"><span class="op-category">Status</span><select class="stage-select" data-stage="${o.id}">${STAGES.map(s=>`<option ${s===o.stage?'selected':''}>${s}</option>`).join('')}</select></div>
+      <div class="card-actions"><button class="small-btn" data-open-op="${o.id}">Details</button><button class="small-btn" data-make-task="${o.id}">Create task</button></div>
+    </article>`).join('') || '<div class="empty">No opportunities match this filter.</div>';
+}
+function renderTasks(){
+  const tasks=state.tasks.filter(t=>!searchTerm||`${t.title} ${t.owner}`.toLowerCase().includes(searchTerm));
+  document.getElementById('taskList').innerHTML=tasks.map(t=>{
+    const op=state.opportunities.find(o=>o.id===t.opportunityId);
+    return `<div class="task-row"><input class="task-check" type="checkbox" ${t.done?'checked':''} data-task="${t.id}"><div><div class="task-title ${t.done?'done':''}">${esc(t.title)}</div><div class="task-sub">${esc(t.owner||'Unassigned')}${op?` · ${esc(op.title)}`:''}</div></div><div class="due">${t.due?`Due ${t.due}`:'No due date'}</div><button class="delete-btn" data-delete-task="${t.id}" aria-label="Delete task">×</button></div>`
+  }).join('') || '<div class="empty">No tasks match your search.</div>';
+}
+function renderFamily(){
+  const people=state.people.filter(p=>!searchTerm||`${p.name} ${p.relationship} ${p.role} ${p.note}`.toLowerCase().includes(searchTerm));
+  document.getElementById('familyGrid').innerHTML=people.map(p=>`<article class="person-card"><div class="person-top"><div class="avatar">${esc(p.name.slice(0,1).toUpperCase())}</div><div><div class="person-name">${esc(p.name)}</div><div class="person-rel">${esc(p.relationship||'Household member')}</div></div></div><div class="person-role">${esc(p.role||'Family member')}</div><div class="person-note">${esc(p.note||'No notes yet.')}</div></article>`).join('') || '<div class="empty">No people match your search.</div>';
+  document.getElementById('householdNotes').value=state.notes||'';
+}
+function populateTaskOps(){
+  const s=document.getElementById('taskOpportunitySelect');
+  s.innerHTML='<option value="">None</option>'+state.opportunities.filter(o=>o.stage!=='Closed').map(o=>`<option value="${o.id}">${esc(o.title)}</option>`).join('');
+}
+function renderAll(){renderDashboard();renderOpportunities();renderTasks();renderFamily();populateTaskOps();}
+
+function openDetail(id){
+  const o=state.opportunities.find(x=>x.id===id); if(!o)return;
+  const related=state.tasks.filter(t=>t.opportunityId===id);
+  document.getElementById('detailContent').innerHTML=`<div class="dialog-head"><div><div class="eyebrow">${esc(o.category)}</div><h3>${esc(o.title)}</h3></div><button class="icon-btn" data-close-detail aria-label="Close">×</button></div>
+  <div class="detail-section"><div class="detail-title">Estimated value</div><div class="detail-value">${money(o.value)}</div></div>
+  <div class="detail-section"><div class="detail-title">Confidence</div><div class="detail-value"><span class="confidence ${o.confidence}">${confLabel(o.confidence)}</span></div></div>
+  <div class="detail-section"><div class="detail-title">Current stage</div><div class="detail-value">${o.stage}</div></div>
+  <div class="detail-section"><div class="detail-title">Next action</div><div class="detail-value">${esc(o.nextAction||'Not set')}</div></div>
+  <div class="detail-section"><div class="detail-title">Linked tasks</div><div class="detail-value">${related.length?related.map(t=>`• ${esc(t.title)}${t.done?' ✓':''}`).join('<br>'):'No linked tasks yet.'}</div></div>
+  <div class="dialog-actions"><button class="ghost" data-delete-op="${o.id}">Delete</button><button class="primary" data-close-detail>Done</button></div>`;
+  document.getElementById('detailDialog').showModal();
+}
+
+function submitDialog(form, handler){
+  form.addEventListener('submit',e=>{e.preventDefault(); if(e.submitter?.value==='cancel'){form.closest('dialog').close();return;} handler(new FormData(form));form.reset();form.closest('dialog').close();save();});
+}
+
+document.addEventListener('click',e=>{
+  const nav=e.target.closest('[data-view]');if(nav){showView(nav.dataset.view);return}
+  const go=e.target.closest('[data-go]');if(go){showView(go.dataset.go);return}
+  const op=e.target.closest('[data-open-op]');if(op){openDetail(op.dataset.openOp);return}
+  const mk=e.target.closest('[data-make-task]');if(mk){populateTaskOps();document.getElementById('taskOpportunitySelect').value=mk.dataset.makeTask;document.getElementById('taskDialog').showModal();return}
+  const st=e.target.closest('[data-stage]');if(st&&e.target.tagName==='SELECT'){return}
+  const delT=e.target.closest('[data-delete-task]');if(delT){state.tasks=state.tasks.filter(t=>t.id!==delT.dataset.deleteTask);save();toast('Task removed');return}
+  const close=e.target.closest('[data-close-detail]');if(close){document.getElementById('detailDialog').close();return}
+  const delO=e.target.closest('[data-delete-op]');if(delO){const id=delO.dataset.deleteOp;state.opportunities=state.opportunities.filter(o=>o.id!==id);state.tasks=state.tasks.filter(t=>t.opportunityId!==id);document.getElementById('detailDialog').close();save();toast('Opportunity removed');return}
+});
+document.addEventListener('change',e=>{
+  if(e.target.matches('[data-stage]')){const o=state.opportunities.find(x=>x.id===e.target.dataset.stage);if(o){o.stage=e.target.value;if(o.stage==='Closed')state.tasks.filter(t=>t.opportunityId===o.id).forEach(t=>t.done=true);save();toast(`Moved to ${o.stage}`)}return}
+  if(e.target.matches('[data-task]')){const t=state.tasks.find(x=>x.id===e.target.dataset.task);if(t){t.done=e.target.checked;save();toast(t.done?'Task closed':'Task reopened')}return}
+});
+
+document.getElementById('addOpportunity').onclick=()=>document.getElementById('opportunityDialog').showModal();
+document.getElementById('addTask').onclick=()=>{populateTaskOps();document.getElementById('taskDialog').showModal()};
+document.getElementById('addPerson').onclick=()=>document.getElementById('personDialog').showModal();
+document.getElementById('doNextMove').onclick=()=>{const o=nextMove();if(o){showView('opportunities');setTimeout(()=>openDetail(o.id),120)}};
+document.getElementById('snoozeNext').onclick=()=>{state.snoozedUntil=Date.now()+86400000;save();toast('Next move snoozed for 24 hours')};
+document.getElementById('resetDemo').onclick=()=>{if(confirm('Reset all Family Agent data on this device?')){state=structuredClone(demo);save();toast('Demo data restored')}};
+document.getElementById('saveNotes').onclick=()=>{state.notes=document.getElementById('householdNotes').value;save();document.getElementById('saveStatus').textContent='Saved just now';toast('Household notes saved')};
+document.getElementById('globalSearch').addEventListener('input',e=>{searchTerm=e.target.value.trim().toLowerCase();renderOpportunities();renderTasks();renderFamily()});
+document.getElementById('opportunityFilters').addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(!b)return;opFilter=b.dataset.filter;document.querySelectorAll('[data-filter]').forEach(x=>x.classList.toggle('active',x===b));renderOpportunities()});
+
+submitDialog(document.getElementById('opportunityForm'),fd=>state.opportunities.push({id:crypto.randomUUID(),title:fd.get('title'),category:fd.get('category'),value:Number(fd.get('value'))||0,confidence:fd.get('confidence'),stage:'Discovered',nextAction:fd.get('nextAction')||'Review eligibility and evidence',created:Date.now()}));
+submitDialog(document.getElementById('taskForm'),fd=>state.tasks.push({id:crypto.randomUUID(),title:fd.get('title'),owner:fd.get('owner')||'Family Manager',due:fd.get('due')||'',opportunityId:fd.get('opportunityId')||'',done:false}));
+submitDialog(document.getElementById('personForm'),fd=>state.people.push({id:crypto.randomUUID(),name:fd.get('name'),relationship:fd.get('relationship')||'Family member',role:fd.get('role')||'Household member',note:fd.get('note')||''}));
+
+renderAll();
+
+</script>
+</body>
+</html>
